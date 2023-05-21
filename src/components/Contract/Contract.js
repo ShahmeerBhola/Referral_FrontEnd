@@ -12,14 +12,45 @@ import {
 import { useDebounce } from "use-debounce";
 import { useNavigate } from "react-router-dom";
 import { contractAbi } from "../../utils/contractABI";
+import { useLocation } from "react-router-dom";
 
 function Contract() {
+  const location = useLocation();
+  const [wallet, setWallet] = useState("");
+  useEffect(() => {
+    const walletArray = JSON.parse(localStorage.getItem("walletAddresses"));
+    if (location?.search !== "") {
+      if (walletArray !== null) {
+        const checkWallet = walletArray?.find(
+          (x) => x === location.search.slice(8)
+        );
+        if (checkWallet !== undefined) {
+
+          setWallet(checkWallet);
+        } else {
+          setWallet(location.search.slice(8));
+          localStorage.setItem(
+            "walletAddresses",
+            JSON.stringify([...walletArray, location.search.slice(8)])
+          );
+        }
+      } else {
+        localStorage.setItem(
+          "walletAddresses",
+          JSON.stringify([location.search.slice(8)])
+        );
+      }
+    }
+  }, []);
   const { address } = useAccount();
   const navigate = useNavigate();
   const [minting, setMinting] = useState({
     MATIC: true,
     USD: false,
   });
+
+  const [totalSupply, setTotalSupply] = useState(1);
+  const [price, setPrice] = useState(1);
   const [count, setCount] = useState(1);
   const increment = () => {
     setCount((prev) => prev + 1);
@@ -49,7 +80,10 @@ function Contract() {
         functionName: "totalSupply",
       },
     ],
-    watch: true,
+    onSuccess(data) {
+      setTotalSupply(data[1].result);
+      setPrice(data[0].result);
+    },
   });
 
   // Contract Write
@@ -59,13 +93,13 @@ function Contract() {
     functionName: "safeMint",
     args: [
       // Arguments for the function call
-      "0x0000000000000000000000000000000000000000", // Referrer address
+      wallet !== "" ? wallet : "0x0000000000000000000000000000000000000000", // Referrer address
       parseInt(debouncedQuantity), // Quantity of tokens (parsed from debounced value)
     ],
     value: ethers.utils
       .parseEther(
         (
-          (100 / (parseInt(contractReads.data[0].result) / 10)) *
+          (100 / (parseInt(price) / 10)) *
           parseInt(debouncedQuantity)
         ).toString()
       )
@@ -114,7 +148,7 @@ function Contract() {
       </p>
       <span className="minting-total ">
         {(
-          (100 / (parseInt(contractReads.data[0].result) / 10)) *
+          (100 / (parseInt(price) / 10)) *
           parseInt(debouncedQuantity).toString()
         ).toFixed(2)}{" "}
         MATIC + Gas
@@ -143,7 +177,7 @@ function Contract() {
       </button>
       <div className="contract-bottom">
         <p className="browser-extension">
-          Total Minted {parseInt(contractReads.data[1].result)}/500
+          Total Minted {parseInt(totalSupply)}/500
         </p>
         <button className="contract-text">
           <span>view contract</span>

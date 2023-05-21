@@ -2,7 +2,7 @@ import { Web3Button } from "@web3modal/react";
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAccount } from "wagmi";
-import { Camel } from "../../assets/images";
+import { Porsche911 } from "../../assets/images";
 import Minting from "../Minting/Minting";
 import { Modal } from "../Modal/Modal";
 import "./Refer.css";
@@ -17,7 +17,7 @@ function Refer() {
   return (
     <>
       <Minting>
-        <img className="camel" src={Camel} alt="Camel" />
+        <img className="camel" src={Porsche911} alt="Camel" />
         {address === undefined ? (
           <div className="my-web3-button">
             <Web3Button />

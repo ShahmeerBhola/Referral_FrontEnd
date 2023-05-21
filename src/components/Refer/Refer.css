@@ -1,5 +1,5 @@
 .minting-content .camel {
-  height: 250px;
+  /* height: 250px; */
   width: 300px;
 }
 .minting-content .connect {
@@ -49,7 +49,7 @@ w3m-core-button w3m-connect-button w3m-button-big button {
 }
 @media (max-width: 1000px) {
   .minting-content .camel {
-    height: 200px;
+    /* height: 200px; */
     width: 280px;
   }
   .minting-content .connect {
@@ -69,7 +69,7 @@ w3m-core-button w3m-connect-button w3m-button-big button {
 }
 @media (max-width: 786px) {
   .minting-content .camel {
-    height: 200px;
+    /* height: 200px; */
     width: 280px;
   }
   .minting-content .connect {
@@ -84,7 +84,7 @@ w3m-core-button w3m-connect-button w3m-button-big button {
 
 @media (max-width: 400px) {
   .minting-content .camel {
-    height: 200px;
+    /* height: 200px; */
     width: 280px;
   }
   .minting-content .connect span {

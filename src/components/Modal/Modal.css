@@ -28,8 +28,8 @@
   width: 50%;
 }
 .modal-left img {
-  width: 370px;
-  height: 280px;
+  width: 100%;
+  /* height: 280px; */
 }
 .modal-right {
   display: flex;
@@ -130,11 +130,11 @@
 @media (max-width: 1000px) {
   .modal .content {
     width: 85%;
-    padding: 5rem 3rem;
+    padding: 4rem 3rem;
   }
-  .modal-left img {
+  /* .modal-left img {
     width: 300px;
-  }
+  } */
 }
 @media (max-width: 786px) {
   .modal .content {
