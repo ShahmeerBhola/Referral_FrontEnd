@@ -96,7 +96,7 @@ function Contract() {
       wallet !== "" ? wallet : "0x0000000000000000000000000000000000000000", // Referrer address
       parseInt(debouncedQuantity), // Quantity of tokens (parsed from debounced value)
     ],
-    value: ethers.utils
+    value: ethers?.utils
       .parseEther(
         (
           (100 / (parseInt(price) / 10)) *
